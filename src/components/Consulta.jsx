@@ -7,15 +7,18 @@ const CedulaInput = () => {
     const [licensePoints, setLicensePoints] = useState(null);
     const [irsStatus, setIrsStatus] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [name, setName] = useState(null);
 
     const handleFetchData = async () => {
         setIsLoading(true); // Start loading
         const pointsResponse = await getLicensePoints(cedula);
         const irsContribution = await checkIRSContribution(cedula);
 
-        setLicensePoints(pointsResponse ? pointsResponse : 'No disponible');
+        setLicensePoints(pointsResponse ? pointsResponse.puntos : 'No disponible');
         setIrsStatus(irsContribution === 'true' ? "Sí contribuye" : "No contribuye");
         setIsLoading(false); // End loading
+
+        setName(pointsResponse ? pointsResponse.nombre : 'No disponible');
     };
 
     return (
@@ -44,6 +47,7 @@ const CedulaInput = () => {
                 <div className='response'>
                     {licensePoints && <p>Puntos en la licencia: <strong>{licensePoints}</strong></p>}
                     {irsStatus && <p>¿Contribuye al SRI?: <strong>{irsStatus}</strong></p>}
+                    {name && <p>Nombre: <strong>{name}</strong></p>}
                 </div>
             </div>
         </div>

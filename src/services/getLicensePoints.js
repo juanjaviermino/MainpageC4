@@ -5,7 +5,7 @@ export const getLicensePoints = async (cedula) => {
     try {
         const response = await fetch(`${API_BASE_URL}?cedula=${cedula}`);
         const data = await response.json();
-        return data.Puntos;
+        return data;
     } catch (error) {
         console.error('Error fetching license points:', error);
         return 'Error fetching data';
